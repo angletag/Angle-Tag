@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import AceEditor  from "react-ace";
+import AceEditor from "react-ace";
 import "brace/mode/jsx";
 import "brace/ext/language_tools";
 import "brace/ext/searchbox";
+import axios from "axios";
 
 const languages = [
   "xml",
@@ -20,7 +21,6 @@ const themes = [
   "solarized_light",
   "terminal"
 ];
-
 languages.forEach(lang => {
   require(`brace/mode/${lang}`);
   require(`brace/snippets/${lang}`);
@@ -31,7 +31,7 @@ themes.forEach(theme => {
 });
 /*eslint-disable no-alert, no-console */
 
-const defaultValue = `<xml></xml>`;
+const defaultValue = "<?xml version='1.0' encoding='UTF-8'?>"
 
 class App extends Component {
 
@@ -81,11 +81,23 @@ class App extends Component {
       fontSize: parseInt(e.target.value, 10)
     });
   }
+  loadFromServer() {
+    console.log("Calling from server");
+    var myObj=this;
+    console.log(myObj);
+    axios.get("http://localhost:8080/api/xml/test",{ responseType: 'text' }).then(
+      res => {
+        console.log("load from server", res);
+        myObj.setState({
+          value: res.data
+        });
+      })
+  }
   constructor(props) {
     super(props);
     this.state = {
       value: defaultValue,
-      placeholder: "Placeholder Text",
+      placeholder: "<?xml version='1.0' encoding='UTF-8'?>",
       theme: "monokai",
       mode: "xml",
       enableBasicAutocompletion: true,
@@ -106,38 +118,34 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="columns">
-     
-        <div className="column">
-          <AceEditor
-            placeholder={this.state.placeholder}
-            mode={this.state.mode}
-            theme={this.state.theme}
-            name="blah2"
-            onLoad={this.onLoad}
-            onChange={this.onChange}
-            onSelectionChange={this.onSelectionChange}
-            onCursorChange={this.onCursorChange}
-            onValidate={this.onValidate}
-            value={this.state.value}
-            fontSize={this.state.fontSize}
-            showPrintMargin={this.state.showPrintMargin}
-            showGutter={this.state.showGutter}
-            highlightActiveLine={this.state.highlightActiveLine}
-            setOptions={{
-              enableBasicAutocompletion: this.state.enableBasicAutocompletion,
-              enableLiveAutocompletion: this.state.enableLiveAutocompletion,
-              enableSnippets: this.state.enableSnippets,
-              showLineNumbers: this.state.showLineNumbers,
-              tabSize: 2
-            }}
-            height="90%"
-            width="98%"
-            
-          />
-        </div>
-       
-        
+      <div>
+        <button onClick={()=>this.loadFromServer()}>load from server</button>
+        <AceEditor
+          placeholder={this.state.placeholder}
+          mode={this.state.mode}
+          theme={this.state.theme}
+          name="angleEditor"
+          onLoad={this.onLoad}
+          onChange={this.onChange}
+          onSelectionChange={this.onSelectionChange}
+          onCursorChange={this.onCursorChange}
+          onValidate={this.onValidate}
+          value={this.state.value}
+          fontSize={this.state.fontSize}
+          showPrintMargin={this.state.showPrintMargin}
+          showGutter={this.state.showGutter}
+          highlightActiveLine={this.state.highlightActiveLine}
+          setOptions={{
+            enableBasicAutocompletion: this.state.enableBasicAutocompletion,
+            enableLiveAutocompletion: this.state.enableLiveAutocompletion,
+            enableSnippets: this.state.enableSnippets,
+            showLineNumbers: this.state.showLineNumbers,
+            tabSize: 2
+          }}
+          height="90vh"
+          width="100%"
+
+        />
       </div>
     );
   }
