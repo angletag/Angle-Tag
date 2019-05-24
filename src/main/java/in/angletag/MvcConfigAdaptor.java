@@ -18,7 +18,7 @@ public class MvcConfigAdaptor implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		if (environment.acceptsProfiles(Profiles.of("local"))) {
+		if (environment.acceptsProfiles(Profiles.of("default"))) {
 			log.info("CrossOrigin is enabled globally for this profile");
 			registry.addMapping("/api/**").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
 					.allowCredentials(true).allowedOrigins("http://localhost:3000").maxAge(3600);
