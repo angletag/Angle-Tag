@@ -126,39 +126,84 @@ class App extends Component {
     return (
       <div>
         <NavBar>></NavBar>
-        <div className="row">
-          <div className="col-md-8 bg-white rounded ">
-            <AceEditor
-              placeholder={this.state.placeholder}
-              mode={this.state.mode}
-              theme={this.state.theme}
-              name="angleEditor"
-              onLoad={this.onLoad}
-              onChange={this.onChange}
-              onSelectionChange={this.onSelectionChange}
-              onCursorChange={this.onCursorChange}
-              onValidate={this.onValidate}
-              value={this.state.value}
-              fontSize={this.state.fontSize}
-              showPrintMargin={this.state.showPrintMargin}
-              showGutter={this.state.showGutter}
-              highlightActiveLine={this.state.highlightActiveLine}
-              setOptions={{
-                enableBasicAutocompletion: this.state.enableBasicAutocompletion,
-                enableLiveAutocompletion: this.state.enableLiveAutocompletion,
-                enableSnippets: this.state.enableSnippets,
-                showLineNumbers: this.state.showLineNumbers,
-                tabSize: 2
-              }}
-              width="95%"
-              height="80vh"
-            />
+        <div className="row mt-1">
+          <div className="col-md-8">
+          <div class="card text-white bg-secondary ">
+              <div class="card-body p-1">
+                <AceEditor
+                placeholder={this.state.placeholder}
+                mode={this.state.mode}
+                theme={this.state.theme}
+                name="angleEditor"
+                onLoad={this.onLoad}
+                onChange={this.onChange}
+                onSelectionChange={this.onSelectionChange}
+                onCursorChange={this.onCursorChange}
+                onValidate={this.onValidate}
+                value={this.state.value}
+                fontSize={this.state.fontSize}
+                showPrintMargin={this.state.showPrintMargin}
+                showGutter={this.state.showGutter}
+                highlightActiveLine={this.state.highlightActiveLine}
+                setOptions={{
+                  enableBasicAutocompletion: this.state.enableBasicAutocompletion,
+                  enableLiveAutocompletion: this.state.enableLiveAutocompletion,
+                  enableSnippets: this.state.enableSnippets,
+                  showLineNumbers: this.state.showLineNumbers,
+                  tabSize: 2
+                }}
+                width="100%"
+                height="75vh"
+                />
+              </div>
+            </div>
+            <div>Results</div>
           </div>
-          <div className="col-md-4">
-            <div class="card text-white bg-info mb-3">
+          <div className="col-md-4 pl-0">
+            <div class="card text-white bg-info mb-1">
               <div class="card-body">
-                <h4 class="card-title">Info card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="form-group">
+                  <label for="exampleTextarea">Xpath Evaluate</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
+                 </div>
+                 <div class="form-group">
+                    <label for="exampleSelect1">Choose Xpath Version</label>
+                    <select class="form-control" id="exampleSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>                
+              </div>
+            </div>
+            <div class="card text-white bg-success mb-1">
+              <div class="card-body">
+                <div class="form-group">
+                <label for="exampleInputFile">Select XSLT/Xquery for transform</label>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    {
+                      //<small id="fileHelp" class="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                    }
+                 </div>
+                 <div class="form-group">
+                    <label for="exampleTextarea">Xslt Or Xquery Params</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
+                    <small id="fileHelp" class="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
+                  </div>
+              </div>
+            </div>
+            <div class="card text-white bg-warning mb-1">
+              <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputFile">Select XSD(S)</label>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                 </div>
               </div>
             </div>
           </div>

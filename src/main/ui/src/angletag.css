@@ -1,5 +1,5 @@
 .btn-nav {
-  color: #fff;
+  color: #343a40;
   border-radius: 0px;
   margin-left:0.3rem;
   font-size: 16px;
@@ -7,16 +7,15 @@
 }
 
 .btn-nav:hover {
-  color: #fff;
-  background-color: #282c2f;
-  border-color: #232628;
-
-  box-shadow: 0 .3rem 1rem #78cc78!important;
+  color: #e6e6e6;
+  background-color: #343a40;
+  border-color: #343a40;
+  box-shadow: 0 .3rem 1rem #8a8a8a!important;
 }
 
 .btn-nav:focus, .btn-nav.focus {
-  -webkit-box-shadow: 0 0 0 0.2rem #78cc78;
-          box-shadow: 0 0 0 0.2rem #78cc78;
+  -webkit-box-shadow: 0 0 0 0.2rem #8a8a8a;
+          box-shadow: 0 0 0 0.2rem #8a8a8a;
 }
 
 .btn-nav.disabled, .btn-nav:disabled {
@@ -28,16 +27,19 @@
 .btn-nav:not(:disabled):not(.disabled):active, .btn-nav:not(:disabled):not(.disabled).active,
 .show > .btn-nav.dropdown-toggle {
   color: #fff;
-  background-color: #232628;
-  border-color: #1d1f22;
+  background-color: #343a40;
+  border-color: #343a40;
 }
 
 .btn-nav:not(:disabled):not(.disabled):active:focus, .btn-nav:not(:disabled):not(.disabled).active:focus,
 .show > .btn-nav.dropdown-toggle:focus {
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(88, 92, 96, 0.5);
-          box-shadow: 0 0 0 0.2rem rgba(88, 92, 96, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem #8a8a8a;
+          box-shadow: 0 0 0 0.2rem #8a8a8a;
 }
 
 .shadow-white{
   box-shadow: 0 .5rem 1rem rgba(247, 243, 243, 0.856) !important;
+}
+body{
+  padding:2px;
 }
