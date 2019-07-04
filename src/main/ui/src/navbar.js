@@ -6,15 +6,14 @@ const NavBar = props => {
            
             <div class="navbar-collapse" id="navbarColor01">
                 <div class="mr-auto">
-                 <button class="btn btn-nav" type="submit">Open</button>
-                 <button class="btn btn-nav" type="submit">Format</button>
-                 <button class="btn btn-nav" type="submit">Serialize</button>
-                 <button class="btn btn-nav" type="submit">DeSerialize</button>
-                 <button class="btn btn-nav" type="submit">Evaluate Xpath</button>
-                 <button class="btn btn-nav" type="submit">Validate XML(XSD)</button>
-                 <button class="btn btn-nav" type="submit">Validate XML(Multi XSD)</button>
-                 <button class="btn btn-nav" type="submit">XSLT Transform</button>
-                 <button class="btn btn-nav" type="submit">Xquery Transform</button>
+                 <button class="btn btn-nav" type="submit"><i class="far fa-folder-open"></i>&nbsp;Open</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-code"></i>&nbsp;Format</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-grip-lines"></i>&nbsp;Serialize</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-grip-lines-vertical"></i>&nbsp;DeSerialize</button>
+                 <button class="btn btn-nav" type="submit"><i class="far fa-check-circle"></i>&nbsp;Evaluate Xpath</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-check"></i>&nbsp;Validate XML(XSD)</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-exchange-alt"></i>&nbsp;XSLT Transform</button>
+                 <button class="btn btn-nav" type="submit"><i class="fas fa-carrot"></i>&nbsp;Xquery Transform</button>
 
                 </div>
                 <div class="my-2 my-lg-0">

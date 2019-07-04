@@ -160,7 +160,7 @@ class App extends Component {
             <div>Results</div>
           </div>
           <div className="col-md-4 pl-0">
-            <div class="card text-white bg-info mb-1">
+            <div class="card text-white bg-primary mb-1">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleTextarea">Xpath Evaluate</label>
@@ -178,7 +178,7 @@ class App extends Component {
                   </div>                
               </div>
             </div>
-            <div class="card text-white bg-success mb-1">
+            <div class="card text-white bg-primary mb-1">
               <div class="card-body">
                 <div class="form-group">
                 <label for="exampleInputFile">Select XSLT/Xquery for transform</label>
@@ -194,7 +194,7 @@ class App extends Component {
                   </div>
               </div>
             </div>
-            <div class="card text-white bg-warning mb-1">
+            <div class="card text-white bg-primary mb-1">
               <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputFile">Select XSD(S)</label>
