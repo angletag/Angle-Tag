@@ -40,6 +40,10 @@ const defaultValue = "<?xml version='1.0' encoding='UTF-8'?>"
 
 class App extends Component {
 
+  openClick(){
+    this.refs.fileUploader.click();
+  }
+
   onChange(newValue) {
     console.log("change", newValue);
     this.setState({
@@ -125,11 +129,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar>></NavBar>
+        <NavBar openClick={()=>this.openClick()}></NavBar>
         <div className="row mt-1">
           <div className="col-md-8">
-          <div class="card text-white bg-secondary ">
-              <div class="card-body p-1">
+          <div className="card text-white ace-container ">
+              <div className="card-body p-1">
                 <AceEditor
                 placeholder={this.state.placeholder}
                 mode={this.state.mode}
@@ -160,54 +164,53 @@ class App extends Component {
             <div>Results</div>
           </div>
           <div className="col-md-4 pl-0">
-            <div class="card text-white bg-primary mb-1">
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="exampleTextarea">Xpath Evaluate</label>
-                    <textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
-                 </div>
-                 <div class="form-group">
-                    <label for="exampleSelect1">Choose Xpath Version</label>
-                    <select class="form-control" id="exampleSelect1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                  </div>                
+            <div className="card text-white bg-right-side mb-1 ">
+              <div className="card-body">
+                <div className="form-group">
+                  <label >Xpath Evaluate&nbsp;</label>
+                    <div className="form-check form-check-inline">
+                      <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-1" value="1"/>
+                      <label className="form-check-label">verison 1</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-2" value="2"/>
+                      <label className="form-check-label">verison 2</label>
+                    </div>
+                    <textarea className="form-control" id="xpath" rows="2"></textarea>
+                 </div>              
               </div>
             </div>
-            <div class="card text-white bg-primary mb-1">
-              <div class="card-body">
-                <div class="form-group">
-                <label for="exampleInputFile">Select XSLT/Xquery for transform</label>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+            <div className="card text-white bg-right-side mb-1">
+              <div className="card-body">
+                <div className="form-group">
+                <label>Select XSLT/Xquery for transform</label>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
                     {
-                      //<small id="fileHelp" class="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                      //<small id="fileHelp" className="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                     }
                  </div>
-                 <div class="form-group">
-                    <label for="exampleTextarea">Xslt Or Xquery Params</label>
-                    <textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
-                    <small id="fileHelp" class="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
+                 <div className="form-group">
+                    <label>Xslt Or Xquery Params</label>
+                    <textarea className="form-control" id="exampleTextarea" rows="2"></textarea>
+                    <small id="fileHelp" className="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
                   </div>
               </div>
             </div>
-            <div class="card text-white bg-primary mb-1">
-              <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputFile">Select XSD(S)</label>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+            <div className="card text-white bg-right-side mb-1">
+              <div className="card-body">
+              <div className="form-group">
+                <label>Select XSD(S)</label>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
                  </div>
               </div>
             </div>
           </div>
         </div>
+        <input type="file" id="file" ref="fileUploader" style={{display: "none"}}/>
       </div>
     );
   }

@@ -43,3 +43,12 @@
 body{
   padding:2px;
 }
+
+.bg-right-side{
+  background-color: #2f8fca;
+  box-shadow: 0 .3rem 1rem #8a8a8a!important;
+}
+
+.ace-container{
+  box-shadow: 0 .3rem 1rem #8a8a8a!important;
+}
