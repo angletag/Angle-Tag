@@ -107,7 +107,7 @@ class App extends Component {
     this.state = {
       value: defaultValue,
       placeholder: "<?xml version='1.0' encoding='UTF-8'?>",
-      theme: "",
+      theme: "xcode",
       mode: "xml",
       enableBasicAutocompletion: true,
       enableLiveAutocompletion: true,
@@ -157,7 +157,7 @@ class App extends Component {
                   tabSize: 2
                 }}
                 width="100%"
-                height="75vh"
+                height="70vh"
                 />
               </div>
             </div>

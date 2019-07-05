@@ -14,11 +14,11 @@ const NavBar = props => {
                  <button className="btn btn-nav" ><i className="fas fa-check"></i>&nbsp;Validate XML(XSD)</button>
                  <button className="btn btn-nav" ><i className="fas fa-exchange-alt"></i>&nbsp;XSLT Transform</button>
                  <button className="btn btn-nav" ><i className="fas fa-carrot"></i>&nbsp;Xquery Transform</button>
-
+                
                 </div>
                 <div className="my-2 my-lg-0">
                 <button className="btn btn-nav" type="button">
-                    <i className="fas fa-bars"></i> login
+                    <i class="fas fa-sign-in-alt"></i> login
                 </button>
                 </div>
             </div>
