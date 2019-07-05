@@ -7,7 +7,7 @@ const NavBar = props => {
             <div className="navbar-collapse" id="navbarColor01">
                 <div className="mr-auto">
                  <button className="btn btn-nav" onClick={props.openClick}><i className="far fa-folder-open"></i>&nbsp;Open</button>
-                 <button className="btn btn-nav" ><i className="fas fa-code"></i>&nbsp;Format</button>
+                 <button className="btn btn-nav" onClick={props.format}><i className="fas fa-code"></i>&nbsp;Format</button>
                  <button className="btn btn-nav" ><i className="fas fa-grip-lines"></i>&nbsp;Serialize</button>
                  <button className="btn btn-nav" ><i className="fas fa-grip-lines-vertical"></i>&nbsp;DeSerialize</button>
                  <button className="btn btn-nav" ><i className="far fa-check-circle"></i>&nbsp;Evaluate Xpath</button>
@@ -18,7 +18,7 @@ const NavBar = props => {
                 </div>
                 <div className="my-2 my-lg-0">
                 <button className="btn btn-nav" type="button">
-                    <i class="fas fa-sign-in-alt"></i> login
+                    <i className="fas fa-sign-in-alt"></i> login
                 </button>
                 </div>
             </div>

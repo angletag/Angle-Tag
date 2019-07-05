@@ -45,24 +45,24 @@ class App extends Component {
   }
 
   onChange(newValue) {
-    console.log("change", newValue);
+    //console.log("change", newValue);
     this.setState({
       value: newValue
     });
   }
 
   onSelectionChange(newValue, event) {
-    console.log("select-change", newValue);
-    console.log("select-change-event", event);
+   // console.log("select-change", newValue);
+    //console.log("select-change-event", event);
   }
 
   onCursorChange(newValue, event) {
-    console.log("cursor-change", newValue);
-    console.log("cursor-change-event", event);
+   // console.log("cursor-change", newValue);
+   // console.log("cursor-change-event", event);
   }
 
   onValidate(annotations) {
-    console.log("onValidate", annotations);
+   // console.log("onValidate", annotations);
   }
 
   setPlaceholder(e) {
@@ -96,7 +96,7 @@ class App extends Component {
     console.log(myObj);
     axios.get("http://localhost:8080/api/xml/test", { responseType: 'text' }).then(
       res => {
-        console.log("load from server", res);
+       // console.log("load from server", res);
         myObj.setState({
           value: res.data
         });
@@ -129,7 +129,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar openClick={()=>this.openClick()}></NavBar>
+        <NavBar 
+          openClick={()=>this.openClick()} 
+          format={()=>this.format()}></NavBar>
         <div className="row mt-1">
           <div className="col-md-8">
           <div className="card text-white ace-container ">
@@ -158,6 +160,7 @@ class App extends Component {
                 }}
                 width="100%"
                 height="70vh"
+                ref="aceEditor"
                 />
               </div>
             </div>
@@ -213,6 +216,12 @@ class App extends Component {
         <input type="file" id="file" ref="fileUploader" style={{display: "none"}}/>
       </div>
     );
+  }
+
+
+  // Code for functionlity 
+  format(){
+    console.log(this.state.value)
   }
 }
 
