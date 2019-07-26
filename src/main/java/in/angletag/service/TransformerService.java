@@ -33,7 +33,9 @@ import net.sf.saxon.s9api.SaxonApiException;
 @Service
 public class TransformerService {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	private static final Logger log = LoggerFactory.getLogger(TransformerService.class);
+
 
 	@Autowired
 	XqueryTransformer xqueryTransformer;

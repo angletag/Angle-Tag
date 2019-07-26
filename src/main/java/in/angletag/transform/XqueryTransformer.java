@@ -41,25 +41,21 @@ public class XqueryTransformer {
 	XQueryExecutable exec;
 	DocumentBuilder builder;
 	Configuration config;
-
 	@Autowired
 	SaxonHandler errorHandler;
 
-	@PostConstruct
-	private void init() {
+	public String transform(String xml, String xquery, Map<String, String> parameters)
+			throws SaxonApiException, IOException {
+		List<StaticError> errors = new ArrayList<>();
+		
+		XdmValue result=null;
 		saxon = new Processor(false);
 		compiler = saxon.newXQueryCompiler();
 		// compiler.setErrorListener(errorListerner);
 		builder = saxon.newDocumentBuilder();
 		config = new Configuration();
 		log.info("The Saxon processor object created");
-	}
-
-	public String transform(String xml, String xquery, Map<String, String> parameters)
-			throws SaxonApiException, IOException {
-		List<StaticError> errors = new ArrayList<>();
 		compiler.setErrorList(errors);
-		XdmValue result=null;
 		try {
 			XQueryExecutable exec = compiler.compile(xquery);
 			log.debug("Xquery Compiled");

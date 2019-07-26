@@ -34,7 +34,9 @@ import net.sf.saxon.s9api.SaxonApiException;
 @RequestMapping("/api/xml")
 public class AngleController {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	private static final Logger log = LoggerFactory.getLogger(AngleController.class);
+
 
 	@Autowired
 	TransformerService service;

@@ -44,7 +44,6 @@ public class XPathEvalHelper {
 		for (int i = 0; i < list.getLength(); i++) {
 			removeNameSpace(list.item(i), "");
 		}
-
 		String result = null;
 		try {
 			XPath xPath = XPathFactory.newInstance().newXPath();

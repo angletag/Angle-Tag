@@ -11,7 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MvcConfigAdaptor implements WebMvcConfigurer{
+	
 	private static final Logger log = LoggerFactory.getLogger(MvcConfigAdaptor.class);
+
 
 	@Autowired
 	private Environment environment;

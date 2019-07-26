@@ -124,7 +124,10 @@ class App extends Component {
       showLineNumbers: true,
       result: "",
       xpathVersion:"1.0",
-      xpath:""
+      xpath:"",
+      xslt:"",
+      output:"",
+      param:""
     };
     this.setPlaceholder = this.setPlaceholder.bind(this);
     this.setTheme = this.setTheme.bind(this);
@@ -143,6 +146,8 @@ class App extends Component {
           serialize={()=>this.serialize()}
           deSerialize={()=>this.deserialize()}
           xpathEval={()=>this.evaluateXpath()}
+          transformXslt={()=>this.transformXslt()}
+          transformXquery={()=>this.transformXquery()}
           >
 
           </NavBar>
@@ -173,17 +178,12 @@ class App extends Component {
                     tabSize: 2
                   }}
                   width="100%"
-                  height="70vh"
+                  height="85vh"
                   ref="aceEditor"
                 />
               </div>
             </div>
             <div><small>(ctrl+z->undo);(ctrl+y->redo);(ctrl+x->cut);(ctrl+c->copy);(ctrl+p->paste)</small></div>
-            <b>Output:</b>
-            <div className="logs">
-              
-                {this.state.result}
-            </div>
           </div>
           <div className="col-md-4 pl-0">
             <div className="card text-white bg-right-side mb-1 ">
@@ -198,6 +198,7 @@ class App extends Component {
                     <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-2" value="2.0" checked={this.state.xpathVersion === '2.0'} onChange={()=>this.xpathChange('2.0')}/>
                     <label className="form-check-label">verison 2</label>
                   </div>
+                  <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
                   <textarea className="form-control" id="xpath" rows="2" onChange={this.xpathHandler.bind(this)}  value={this.state.xpath}></textarea>
                 </div>
               </div>
@@ -205,15 +206,15 @@ class App extends Component {
             <div className="card text-white bg-right-side mb-1">
               <div className="card-body">
                 <div className="form-group">
-                  <label>Select XSLT/Xquery for transform</label>
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+                  <label>Select XSLT/Xquery for transform</label> <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
+                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" onChange={this.readXsltFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
                   {
                     //<small id="fileHelp" className="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                   }
                 </div>
                 <div className="form-group">
                   <label>Xslt Or Xquery Params</label>
-                  <textarea className="form-control" id="exampleTextarea" rows="2"></textarea>
+                  <textarea className="form-control" id="exampleTextarea" rows="2" value={this.state.param} onChange={this.handleParam.bind(this)}></textarea>
                   <small id="fileHelp" className="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
                 </div>
               </div>
@@ -233,6 +234,21 @@ class App extends Component {
           </div>
         </div>
         <input type="file" id="file" ref="fileUploader" style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
+        <div className="modal fade" id="showTransformResult" role="dialog" ref="showTransformResult" >
+          <div className="modal-dialog modal-dialog-centered model-liquid-xl" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Result</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <textarea rows="20" className="form-control" value={this.state.output} readOnly></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -309,6 +325,10 @@ class App extends Component {
     this.setState({xpath:e.target.value})
   }
 
+  handleParam(e){
+    this.setState({param:e.target.value})
+  }
+
   evaluateXpath() {
     let selectedXml = this.state.value.trim();
     if (selectedXml === "") {
@@ -332,13 +352,82 @@ class App extends Component {
     ).then(response => {
       console.log(response)
       let value = response.data;
-      self.setState({ result: value });
+      self.setState({ output: value });
     }).catch(error => {
       console.log(error);
       alert("Error occured while doing xpath evaluation");
     });
   }
 
+  readXsltFile(event) {
+    let self = this;
+    let fileReader = new FileReader();
+    fileReader.readAsText(event.target.files[0], "UTF-8");
+    fileReader.onload = () => {
+      let xml = fileReader.result.trim()
+      self.setState({ xslt: xml });
+    }
+  }
+
+  transformXslt() {
+    let selectedXml = this.state.value
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    let xpath = this.state.xslt
+    if (xpath === "") {
+      alert("Please provide input XSLT");
+      return false;
+    }
+    let self = this;
+    let data = {
+      xml: selectedXml,
+      xqueryValue: xpath,
+      param: this.state.param
+    }
+    axios.post(domain.dev.concat("/api/xml/xslt"),
+      data,
+      { responseType: "text" }
+    ).then(response => {
+      let output = response.data;
+      self.setState({ output:output });
+    }).catch(error => {
+      console.log(error);
+      alert("Error occured while doing xslt transformation");
+    });
+  }
+
+  transformXquery() {
+   
+    let selectedXml = this.state.value
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    let xpath = this.state.xslt
+    if (xpath === "") {
+      alert("Please provide input Xquery");
+      return false;
+    }
+    let self = this;
+
+    let data = {
+      xml: selectedXml,
+      xqueryValue: xpath,
+      param: this.state.param
+    }
+    axios.post(domain.dev.concat("/api/xml/xquery"),
+      data,
+      { responseType: "text" }
+    ).then(response => {
+      let output = response.data;
+      self.setState({ output:output });
+    }).catch(error => {
+      console.log(error);
+      alert("Error occured while doing xquery transformation");
+    });
+  }
 }
 
 export default App;

@@ -35,25 +35,20 @@ public class XSLTHelper {
 	@Autowired
 	SaxonHandler errorHandler;
 
-	private Processor proc;
-	private StringWriter sw;
-	private Serializer out;
-	private XsltCompiler comp;
-
-	@PostConstruct
-	private void init() {
-		proc = new Processor(false);
-		sw = new StringWriter();
-		out = proc.newSerializer(sw);
-		comp = proc.newXsltCompiler();
-		log.info("The Saxon processor object created");
-	}
 
 	public String transform(String inputXml, String xsltPayload, Map<String, String> parameters)
 			throws SaxonApiException {
 		List<StaticError> errors = new ArrayList<>();
-		comp.setErrorList(errors);
+		Processor proc = null;
+		StringWriter sw = new StringWriter();
+		Serializer out = null;
+		XsltCompiler comp = null;
+
 		try {
+			proc = new Processor(false);
+			out = proc.newSerializer(sw);
+			comp = proc.newXsltCompiler();
+			comp.setErrorList(errors);
 			XsltExecutable exec = comp.compile(new StreamSource(new StringReader(xsltPayload)));
 			XdmNode source = proc.newDocumentBuilder().build(new StreamSource(new StringReader(inputXml)));
 			XsltTransformer transformer = exec.load();
@@ -67,7 +62,7 @@ public class XSLTHelper {
 			transformer.setDestination(out);
 			transformer.transform();
 		} catch (SaxonApiException saxExcep) {
-			String compilerError=errorHandler.processError(errors);
+			String compilerError = errorHandler.processError(errors);
 			throw new SaxonApiException(compilerError, saxExcep);
 		}
 		return sw.toString();

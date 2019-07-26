@@ -10,10 +10,10 @@ const NavBar = props => {
                  <button className="btn btn-nav" onClick={props.format}><i className="fas fa-code"></i>&nbsp;Format</button>
                  <button className="btn btn-nav" onClick={props.serialize}><i className="fas fa-grip-lines"></i>&nbsp;Serialize</button>
                  <button className="btn btn-nav" onClick={props.deSerialize}><i className="fas fa-grip-lines-vertical"></i>&nbsp;DeSerialize</button>
-                 <button className="btn btn-nav" onClick={props.xpathEval}><i className="far fa-check-circle"></i>&nbsp;Evaluate Xpath</button>
+                 <button className="btn btn-nav" onClick={props.xpathEval} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="far fa-check-circle"></i>&nbsp;Evaluate Xpath</button>
                  <button className="btn btn-nav" ><i className="fas fa-check"></i>&nbsp;Validate XML(XSD)</button>
-                 <button className="btn btn-nav" ><i className="fas fa-exchange-alt"></i>&nbsp;XSLT Transform</button>
-                 <button className="btn btn-nav" ><i className="fas fa-carrot"></i>&nbsp;Xquery Transform</button>
+                 <button className="btn btn-nav" onClick={props.transformXslt} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="fas fa-exchange-alt"></i>&nbsp;XSLT Transform</button>
+                 <button className="btn btn-nav" onClick={props.transformXquery} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="fas fa-carrot"></i>&nbsp;Xquery Transform</button>
                 
                 </div>
                 <div className="my-2 my-lg-0">
