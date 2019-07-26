@@ -27,6 +27,7 @@ import in.angletag.domain.TransformXqParamInput;
 import in.angletag.domain.XPathInput;
 import in.angletag.domain.XsdValidationInput;
 import in.angletag.service.TransformerService;
+import in.angletag.utilities.XmlFormatter;
 import net.sf.saxon.s9api.SaxonApiException;
 
 @RestController
@@ -37,6 +38,9 @@ public class AngleController {
 
 	@Autowired
 	TransformerService service;
+	
+	@Autowired
+	XmlFormatter xmlFormatter;
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.TEXT_XML_VALUE, path = "/xquery")
 	public String transformXQuery(@RequestBody TranformerInput transformer) {
@@ -161,6 +165,26 @@ public class AngleController {
 			e.printStackTrace(new PrintWriter(sw));
 			result = sw.toString();
 		}
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.TEXT_XML_VALUE, path = "/formatXML")
+	public String formatXML(@RequestBody TranformerInput input) {
+
+		log.trace("Entry formatXML input xml \n {}", input.getXml());
+		
+		String result = "Processing.,..";
+		try {
+			result = xmlFormatter.prettyFormat(input.getXml(), "2");
+		} catch (Exception e) {
+			log.error("Error in format xml {}", e);
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			result = sw.toString();
+		}
+		
+		log.trace("formatXML output xml \n {}", result);
+
 		return result;
 	}
 
