@@ -6,7 +6,7 @@
   /*padding:0.5rem 1rem !important;*/
 }
 
-.btn-nav:hover {
+.btn-nav:hover,.dropdown-item:hover {
   color: #e6e6e6;
   background-color: #343a40;
   border-color: #343a40;
