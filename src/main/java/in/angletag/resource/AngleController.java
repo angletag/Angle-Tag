@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.xml.transform.TransformerConfigurationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import in.angletag.domain.TransformXqParamInput;
 import in.angletag.domain.XPathInput;
 import in.angletag.domain.XsdValidationInput;
 import in.angletag.service.TransformerService;
+import in.angletag.service.XMLGenerationService;
 import in.angletag.utilities.XmlFormatter;
 import net.sf.saxon.s9api.SaxonApiException;
 
@@ -44,6 +47,9 @@ public class AngleController {
 	@Autowired
 	XmlFormatter xmlFormatter;
 
+	@Autowired
+	XMLGenerationService xmlGeneration;
+	
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.TEXT_XML_VALUE, path = "/xquery")
 	public String transformXQuery(@RequestBody TranformerInput transformer) {
 
@@ -193,6 +199,11 @@ public class AngleController {
 	@GetMapping("/test")
 	public String test() {
 		return "<Test>From server </Test>";
+	}
+	
+	@PostMapping("/generateXml")
+	public void generateXML(@RequestBody String xsd) throws TransformerConfigurationException {
+		xmlGeneration.generateSampleXml(xsd);
 	}
 
 }

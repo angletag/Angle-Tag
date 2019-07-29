@@ -148,6 +148,8 @@ class App extends Component {
           xpathEval={()=>this.evaluateXpath()}
           transformXslt={()=>this.transformXslt()}
           transformXquery={()=>this.transformXquery()}
+          saveClick={()=>this.save()}
+          generateXML={()=>this.generateXML()}
           >
 
           </NavBar>
@@ -233,7 +235,8 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <input type="file" id="file" ref="fileUploader" style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
+        <input type="file" id="file" ref="fileUploader" accept=".xml,.xslt,.xsd,.xqy"
+        style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
         <div className="modal fade" id="showTransformResult" role="dialog" ref="showTransformResult" >
           <div className="modal-dialog modal-dialog-centered model-liquid-xl" role="document">
             <div className="modal-content">
@@ -253,7 +256,28 @@ class App extends Component {
     );
   }
 
+  save(){
+    
+  }
+  generateXML(){
+    alert("generating xml");
+    let selectedXml = this.state.value
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    let self = this;
+  
+    axios.post(domain.dev.concat("/api/xml/generateXml"), selectedXml, { responseType: "text",headers:{'Content-Type': 'application/xml'}} ).then(response => {
+      console.log(response)
+      let value = response.data;
+      self.setState({ output: value });
+    }).catch(error => {
+      console.log(error);
+      alert("Error occured while doing xpath evaluation");
+    });
 
+  }
   // Code for functionlity 
   format() {
     let selectedXml = this.state.value.trim();
@@ -263,7 +287,7 @@ class App extends Component {
     }
 
     let self = this;
-    if (selectedXml.includes("<xsl:stylesheet")) { // For xslt only
+    if (selectedXml.includes("<xsl:stylesheet") || selectedXml.includes("<xsd:schema")) { // For xslt only
       let formatedData = beautify(selectedXml);
       //console.log(formatedData);
       self.setState({ value: formatedData });

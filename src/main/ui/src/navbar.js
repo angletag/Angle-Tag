@@ -6,12 +6,29 @@ const NavBar = props => {
            
             <div className="navbar-collapse" id="navbarColor01">
                 <div className="mr-auto">
-                 <button className="btn btn-nav" onClick={props.openClick}><i className="far fa-folder-open"></i>&nbsp;Open</button>
+                <div className="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" className="btn dropdown-toggle btn-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i className="far fa-folder-open"></i>&nbsp;File
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <button className="dropdown-item" onClick={props.openClick}>Open xm/xslt/xsd/xqy</button>
+                        <button className="dropdown-item" onClick={props.saveClick}>Save</button>
+                    </div>
+                </div>
+                 
                  <button className="btn btn-nav" onClick={props.format}><i className="fas fa-code"></i>&nbsp;Format</button>
                  <button className="btn btn-nav" onClick={props.serialize}><i className="fas fa-grip-lines"></i>&nbsp;Serialize</button>
                  <button className="btn btn-nav" onClick={props.deSerialize}><i className="fas fa-grip-lines-vertical"></i>&nbsp;DeSerialize</button>
                  <button className="btn btn-nav" onClick={props.xpathEval} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="far fa-check-circle"></i>&nbsp;Evaluate Xpath</button>
-                 <button className="btn btn-nav" ><i className="fas fa-check"></i>&nbsp;Validate XML(XSD)</button>
+                 <div className="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" className="btn dropdown-toggle btn-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i className="fa fa-check"></i>&nbsp;XSD
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <button className="dropdown-item" onClick={props.validateXML}>Validate XML(select single/Multiple xsd)</button>
+                        <button className="dropdown-item" onClick={props.generateXML}>Generate XML</button>
+                    </div>
+                </div>
                  <button className="btn btn-nav" onClick={props.transformXslt} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="fas fa-exchange-alt"></i>&nbsp;XSLT Transform</button>
                  <button className="btn btn-nav" onClick={props.transformXquery} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false"><i className="fas fa-carrot"></i>&nbsp;Xquery Transform</button>
                 
