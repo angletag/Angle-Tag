@@ -123,11 +123,11 @@ class App extends Component {
       enableSnippets: false,
       showLineNumbers: true,
       result: "",
-      xpathVersion:"1.0",
-      xpath:"",
-      xslt:"",
-      output:"",
-      param:""
+      xpathVersion: "1.0",
+      xpath: "",
+      xslt: "",
+      output: "",
+      param: ""
     };
     this.setPlaceholder = this.setPlaceholder.bind(this);
     this.setTheme = this.setTheme.bind(this);
@@ -143,16 +143,17 @@ class App extends Component {
         <NavBar
           openClick={() => this.openClick()}
           format={() => this.format()}
-          serialize={()=>this.serialize()}
-          deSerialize={()=>this.deserialize()}
-          xpathEval={()=>this.evaluateXpath()}
-          transformXslt={()=>this.transformXslt()}
-          transformXquery={()=>this.transformXquery()}
-          saveClick={()=>this.save()}
-          generateXML={()=>this.generateXML()}
-          >
+          serialize={() => this.serialize()}
+          deSerialize={() => this.deserialize()}
+          xpathEval={() => this.evaluateXpath()}
+          transformXslt={() => this.transformXslt()}
+          transformXquery={() => this.transformXquery()}
+          saveClick={() => this.save()}
+          generateXML={() => this.generateXML()}
+          viewInGraph={() => this.handleSubmit()}
+        >
 
-          </NavBar>
+        </NavBar>
         <div className="row mt-1">
           <div className="col-md-8">
             <div className="card text-white ace-container ">
@@ -193,15 +194,15 @@ class App extends Component {
                 <div className="form-group">
                   <label >Xpath Evaluate&nbsp;</label>
                   <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-1" value="1.0" checked={this.state.xpathVersion === '1.0'} onChange={()=>this.xpathChange('1.0')}/>
+                    <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-1" value="1.0" checked={this.state.xpathVersion === '1.0'} onChange={() => this.xpathChange('1.0')} />
                     <label className="form-check-label">verison 1</label>
                   </div>
                   <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-2" value="2.0" checked={this.state.xpathVersion === '2.0'} onChange={()=>this.xpathChange('2.0')}/>
+                    <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-2" value="2.0" checked={this.state.xpathVersion === '2.0'} onChange={() => this.xpathChange('2.0')} />
                     <label className="form-check-label">verison 2</label>
                   </div>
                   <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <textarea className="form-control" id="xpath" rows="2" onChange={this.xpathHandler.bind(this)}  value={this.state.xpath}></textarea>
+                  <textarea className="form-control" id="xpath" rows="2" onChange={this.xpathHandler.bind(this)} value={this.state.xpath}></textarea>
                 </div>
               </div>
             </div>
@@ -209,7 +210,7 @@ class App extends Component {
               <div className="card-body">
                 <div className="form-group">
                   <label>Select XSLT/Xquery for transform</label> <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" onChange={this.readXsltFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
+                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" onChange={this.readXsltFile.bind(this)} onClick={(event) => { event.target.value = null }} />
                   {
                     //<small id="fileHelp" className="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                   }
@@ -236,7 +237,10 @@ class App extends Component {
           </div>
         </div>
         <input type="file" id="file" ref="fileUploader" accept=".xml,.xslt,.xsd,.xqy"
-        style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }}/>
+          style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }} />
+        {
+          // model
+        }
         <div className="modal fade" id="showTransformResult" role="dialog" ref="showTransformResult" >
           <div className="modal-dialog modal-dialog-centered model-liquid-xl" role="document">
             <div className="modal-content">
@@ -252,23 +256,36 @@ class App extends Component {
             </div>
           </div>
         </div>
+        {
+          // view XSD
+        }
+        <form target="_blank" ref="svgForm" method="post" encType="text/plain" action={domain.dev.concat("/api/xml/viewXsd.svg")}>
+          <textarea name="xsd"
+            rows="28"
+            className="d-none"
+            value={this.state.value}
+            readOnly
+          />
+          <input type="submit" value="SVG-View" className="d-none" />
+        </form>
+
       </div>
+
     );
   }
 
-  save(){
-    
+  save() {
+
   }
-  generateXML(){
-    alert("generating xml");
+  generateXML() {
     let selectedXml = this.state.value
     if (selectedXml === "") {
       alert("Please provide input xml");
       return false;
     }
     let self = this;
-  
-    axios.post(domain.dev.concat("/api/xml/generateXml"), selectedXml, { responseType: "text",headers:{'Content-Type': 'application/xml'}} ).then(response => {
+
+    axios.post(domain.dev.concat("/api/xml/generateXml"), selectedXml, { responseType: "text", headers: { 'Content-Type': 'application/xml' } }).then(response => {
       console.log(response)
       let value = response.data;
       self.setState({ output: value });
@@ -341,16 +358,16 @@ class App extends Component {
     this.setState({ value: formatedXMl });
   }
 
-  xpathChange(v){
-    this.setState({xpathVersion:v})
+  xpathChange(v) {
+    this.setState({ xpathVersion: v })
   }
 
-  xpathHandler(e){
-    this.setState({xpath:e.target.value})
+  xpathHandler(e) {
+    this.setState({ xpath: e.target.value })
   }
 
-  handleParam(e){
-    this.setState({param:e.target.value})
+  handleParam(e) {
+    this.setState({ param: e.target.value })
   }
 
   evaluateXpath() {
@@ -364,7 +381,7 @@ class App extends Component {
       alert("Please provide input xpath");
       return false;
     }
-    let xpathV=this.state.xpathVersion
+    let xpathV = this.state.xpathVersion
     let self = this;
     let data = {
       xml: selectedXml,
@@ -415,7 +432,7 @@ class App extends Component {
       { responseType: "text" }
     ).then(response => {
       let output = response.data;
-      self.setState({ output:output });
+      self.setState({ output: output });
     }).catch(error => {
       console.log(error);
       alert("Error occured while doing xslt transformation");
@@ -423,7 +440,7 @@ class App extends Component {
   }
 
   transformXquery() {
-   
+
     let selectedXml = this.state.value
     if (selectedXml === "") {
       alert("Please provide input xml");
@@ -446,11 +463,24 @@ class App extends Component {
       { responseType: "text" }
     ).then(response => {
       let output = response.data;
-      self.setState({ output:output });
+      self.setState({ output: output });
     }).catch(error => {
       console.log(error);
       alert("Error occured while doing xquery transformation");
     });
+  }
+
+  handleSubmit(event) {
+    let selectedXml = this.state.value.trim();
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    if (!selectedXml.includes("<xsd:schema")) { // For xslt only
+      alert("invalid XSD");
+      return false;
+    }
+    this.refs.svgForm.submit();
   }
 }
 

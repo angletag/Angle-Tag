@@ -25,7 +25,7 @@ public class XMLGenerationService {
 	
 	private static final Logger log = LoggerFactory.getLogger(XMLGenerationService.class);
 
-		public void generateSampleXml(String schema) throws TransformerConfigurationException {
+		public String generateSampleXml(String schema) throws TransformerConfigurationException {
 
 			//Default options
 			XSInstance instance = new XSInstance();
@@ -48,6 +48,7 @@ public class XMLGenerationService {
 		    String xml = writer.toString();
 				
 			log.debug("Generated XML {}",xml);
+			return xml;
 		}
     
 }

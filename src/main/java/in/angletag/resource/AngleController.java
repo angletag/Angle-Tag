@@ -202,8 +202,8 @@ public class AngleController {
 	}
 	
 	@PostMapping("/generateXml")
-	public void generateXML(@RequestBody String xsd) throws TransformerConfigurationException {
-		xmlGeneration.generateSampleXml(xsd);
+	public String generateXML(@RequestBody String xsd) throws TransformerConfigurationException {
+		return xmlGeneration.generateSampleXml(xsd);
 	}
 
 }
