@@ -32,9 +32,10 @@ const NavBar = props => {
                     <i className="fa fa-check"></i>&nbsp;XSD
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <button className="dropdown-item" onClick={props.validateXML}>Validate XML(select single/Multiple xsd)</button>
+                        <button className="dropdown-item" onClick={props.validateXML}>Validate XML(Single xsd)</button>
                         <button className="dropdown-item" onClick={props.generateXML} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">Generate XML</button>
                         <button className="dropdown-item" onClick={props.viewInGraph}>View in Graph</button>
+                        <button className="dropdown-item" onClick={props.validateXML}>Validate XML(Multiple xsd)</button>
                     </div>
                 </div>
                 <div className="btn-group" role="group">
