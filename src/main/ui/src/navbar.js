@@ -12,7 +12,7 @@ const NavBar = props => {
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         <button className="dropdown-item" onClick={props.openClick}>Open xm/xslt/xsd/xqy</button>
-                        <button className="dropdown-item" onClick={props.saveClick}>Save</button>
+                        <button className="dropdown-item" onClick={props.saveToFile}>Save</button>
                     </div>
                 </div>
                 <div className="btn-group" role="group">

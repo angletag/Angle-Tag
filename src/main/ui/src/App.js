@@ -48,7 +48,11 @@ class App extends Component {
   openClick() {
     this.refs.fileUploader.click();
   }
-
+  
+  openChooseFile(){
+    this.refs.fileChooser.click();
+  }
+  
   onChange(newValue) {
     //console.log("change", newValue);
     this.setState({
@@ -124,8 +128,7 @@ class App extends Component {
       showLineNumbers: true,
       result: "",
       xpathVersion: "1.0",
-      xpath: "",
-      xslt: "",
+      input:"",
       output: "",
       param: ""
     };
@@ -151,6 +154,7 @@ class App extends Component {
           saveClick={() => this.save()}
           generateXML={() => this.generateXML()}
           viewInGraph={() => this.handleSubmit()}
+          saveToFile={()=>this.saveToFile()}
         >
 
         </NavBar>
@@ -202,45 +206,26 @@ class App extends Component {
                     <label className="form-check-label">verison 2</label>
                   </div>
                   <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <textarea className="form-control" id="xpath" rows="2" onChange={this.xpathHandler.bind(this)} value={this.state.xpath}></textarea>
-                </div>
-              </div>
-            </div>
-            <div className="card text-white bg-right-side mb-1">
-              <div className="card-body">
-                <div className="form-group">
-                  <label>Select XSLT/Xquery for transform</label> <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" onChange={this.readXsltFile.bind(this)} onClick={(event) => { event.target.value = null }} />
-                  {
-                    //<small id="fileHelp" className="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-                  }
-                </div>
-                <div className="form-group">
-                  <label>Xslt Or Xquery Params</label>
+                  <br/>
+                  <label><a onClick={()=>this.openChooseFile()} href="#" className="btn btn-warning">Choose</a>  or type xpath/xslt/xsd/xquery </label> 
+                               <br/>Params
                   <textarea className="form-control" id="exampleTextarea" rows="2" value={this.state.param} onChange={this.handleParam.bind(this)}></textarea>
                   <small id="fileHelp" className="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
+                 
+                  <textarea className="form-control" id="xpath" rows="16" onChange={this.xpathHandler.bind(this)} value={this.state.input}></textarea>
+                  <a onClick={()=>this.chooseMultiXsd()} href="#" className="btn btn-warning">Choose</a> multiple XSDs
                 </div>
               </div>
             </div>
-            <div className="card text-white bg-right-side mb-1">
-              <div className="card-body">
-                <div className="form-group">
-                  <label>Select XSD(S)</label>
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                  <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
         <input type="file" id="file" ref="fileUploader" accept=".xml,.xslt,.xsd,.xqy"
-          style={{ display: "none" }} onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }} />
-        {
-          // model
-        }
+          style={{ display: "none" }} onChange={this.readValueFile.bind(this)} onClick={(event) => { event.target.value = null }} />
+
+        <input type="file" id="chooseFile" ref="fileChooser" style={{ display: "none" }} 
+          onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }} />
+
         <div className="modal fade" id="showTransformResult" role="dialog" ref="showTransformResult" >
           <div className="modal-dialog modal-dialog-centered model-liquid-xl" role="document">
             <div className="modal-content">
@@ -256,9 +241,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {
-          // view XSD
-        }
+
         <form target="_blank" ref="svgForm" method="post" encType="text/plain" action={domain.dev.concat("/api/xml/viewXsd.svg")}>
           <textarea name="xsd"
             rows="28"
@@ -274,9 +257,24 @@ class App extends Component {
     );
   }
 
-  save() {
-
+  chooseMultiXsd(){
+    console.log("selecting");
   }
+
+  saveToFile() {
+    let resultXml = this.state.value
+    if (resultXml === "") {
+      alert("No result to save");
+      return false;
+    }
+    let element = document.createElement("a");
+    let file = new Blob([resultXml], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = "angleTag-result.txt";
+    document.body.appendChild(element);
+    element.click();
+  }
+  
   generateXML() {
     let selectedXml = this.state.value
     if (selectedXml === "") {
@@ -291,7 +289,7 @@ class App extends Component {
       self.setState({ output: value });
     }).catch(error => {
       console.log(error);
-      alert("Error occured while doing xpath evaluation");
+      alert("Error occured while doing getting generated xml");
     });
 
   }
@@ -328,7 +326,7 @@ class App extends Component {
     }
   }
 
-  readInputFile(event) {
+  readValueFile(event) {
     let self = this;
     let fileReader = new FileReader();
     fileReader.readAsText(event.target.files[0], "UTF-8");
@@ -363,7 +361,7 @@ class App extends Component {
   }
 
   xpathHandler(e) {
-    this.setState({ xpath: e.target.value })
+    this.setState({ input: e.target.value })
   }
 
   handleParam(e) {
@@ -376,7 +374,7 @@ class App extends Component {
       alert("Please provide input xml");
       return false;
     }
-    let xpath = this.state.xpath;
+    let xpath = this.state.input;
     if (xpath === "") {
       alert("Please provide input xpath");
       return false;
@@ -400,13 +398,13 @@ class App extends Component {
     });
   }
 
-  readXsltFile(event) {
+  readInputFile(event) {
     let self = this;
     let fileReader = new FileReader();
     fileReader.readAsText(event.target.files[0], "UTF-8");
     fileReader.onload = () => {
       let xml = fileReader.result.trim()
-      self.setState({ xslt: xml });
+      self.setState({ input: xml });
     }
   }
 
@@ -416,7 +414,7 @@ class App extends Component {
       alert("Please provide input xml");
       return false;
     }
-    let xpath = this.state.xslt
+    let xpath = this.state.input
     if (xpath === "") {
       alert("Please provide input XSLT");
       return false;
@@ -446,7 +444,7 @@ class App extends Component {
       alert("Please provide input xml");
       return false;
     }
-    let xpath = this.state.xslt
+    let xpath = this.state.input
     if (xpath === "") {
       alert("Please provide input Xquery");
       return false;
