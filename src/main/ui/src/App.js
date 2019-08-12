@@ -156,6 +156,7 @@ class App extends Component {
           generateXML={() => this.generateXML()}
           viewInGraph={() => this.handleSubmit()}
           saveToFile={()=>this.saveToFile()}
+          validateXML={()=>this.validateXML()}
         >
 
         </NavBar>
@@ -264,6 +265,35 @@ class App extends Component {
     );
   }
 
+  validateXML(){
+    let selectedXml = this.state.value
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    let xsd = this.state.input
+    if (xsd === "") {
+      alert("Please provide input XSD");
+      return false;
+    }
+    let self = this;
+    let data = {
+      xml: selectedXml,
+      xsd: xsd,
+    }
+    axios.post(domain.dev.concat("/api/xml/xsd"),
+      data,
+      { responseType: "text" }
+    ).then(response => {
+      let output = response.data;
+      self.setState({ output: output });
+    }).catch(error => {
+      console.log(error);
+      alert("Error occured while doing xslt transformation");
+    });
+  }
+
+  
   chooseMultiXsd(){
     this.refs.multiXSD.click();
   }
