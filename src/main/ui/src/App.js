@@ -130,7 +130,8 @@ class App extends Component {
       xpathVersion: "1.0",
       input:"",
       output: "",
-      param: ""
+      param: "",
+      multiXSD:[]
     };
     this.setPlaceholder = this.setPlaceholder.bind(this);
     this.setTheme = this.setTheme.bind(this);
@@ -196,7 +197,12 @@ class App extends Component {
             <div className="card text-white bg-right-side mb-1 ">
               <div className="card-body">
                 <div className="form-group">
-                  <label >Xpath Evaluate&nbsp;</label>
+                  <label><a onClick={()=>this.openChooseFile()} href="#" className="btn btn-sm btn-warning">Choose</a>  or type xpath/xslt/xsd/xquery </label> 
+                  &nbsp; ||   <a onClick={()=>this.chooseMultiXsd()} href="#" className="btn btn-sm btn-warning">Choose</a> multiple XSDs
+                 <br/>
+                  <a class="btn btn-sm btn-secondary mb-1" data-toggle="collapse" href="#paramCollapse" role="button" aria-expanded="false" aria-controls="paramCollapse">
+                   Params &nbsp;<i class="fas fa-chevron-down"></i> 
+                  </a> <label >Xpath Evaluate&nbsp;</label>
                   <div className="form-check form-check-inline">
                     <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-1" value="1.0" checked={this.state.xpathVersion === '1.0'} onChange={() => this.xpathChange('1.0')} />
                     <label className="form-check-label">verison 1</label>
@@ -205,15 +211,13 @@ class App extends Component {
                     <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-2" value="2.0" checked={this.state.xpathVersion === '2.0'} onChange={() => this.xpathChange('2.0')} />
                     <label className="form-check-label">verison 2</label>
                   </div>
-                  <button className="btn btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <br/>
-                  <label><a onClick={()=>this.openChooseFile()} href="#" className="btn btn-warning">Choose</a>  or type xpath/xslt/xsd/xquery </label> 
-                               <br/>Params
+                  <button className="btn btn-sm btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
+                  <div class="collapse" id="paramCollapse">
                   <textarea className="form-control" id="exampleTextarea" rows="2" value={this.state.param} onChange={this.handleParam.bind(this)}></textarea>
                   <small id="fileHelp" className="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
-                 
+                  </div>
                   <textarea className="form-control" id="xpath" rows="16" onChange={this.xpathHandler.bind(this)} value={this.state.input}></textarea>
-                  <a onClick={()=>this.chooseMultiXsd()} href="#" className="btn btn-warning">Choose</a> multiple XSDs
+                
                 </div>
               </div>
             </div>
@@ -225,6 +229,9 @@ class App extends Component {
 
         <input type="file" id="chooseFile" ref="fileChooser" style={{ display: "none" }} 
           onChange={this.readInputFile.bind(this)} onClick={(event) => { event.target.value = null }} />
+
+        <input type="file" id="multiXSD" ref="multiXSD" multiple style={{ display: "none" }} 
+          onChange={this.readMultiInputFile.bind(this)} onClick={(event) => { event.target.value = null }} />
 
         <div className="modal fade" id="showTransformResult" role="dialog" ref="showTransformResult" >
           <div className="modal-dialog modal-dialog-centered model-liquid-xl" role="document">
@@ -258,7 +265,7 @@ class App extends Component {
   }
 
   chooseMultiXsd(){
-    console.log("selecting");
+    this.refs.multiXSD.click();
   }
 
   saveToFile() {
@@ -406,6 +413,25 @@ class App extends Component {
       let xml = fileReader.result.trim()
       self.setState({ input: xml });
     }
+  }
+
+  readMultiInputFile(event) {
+    let self = this;
+    if(event.target.files.length>5){
+      alert("Only 5 files allowed");
+      return false;
+    }
+    let xsds=[];
+    for(let i=0;i<event.target.files.length;i++){
+      let fileReader = new FileReader();
+      fileReader.readAsText(event.target.files[i], "UTF-8");
+      fileReader.onload = () => {
+        let xml = fileReader.result.trim()
+        xsds[i]=xml
+        self.setState({ multiXSD: xsds });
+      }
+    }
+    
   }
 
   transformXslt() {
