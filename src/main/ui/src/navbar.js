@@ -35,7 +35,7 @@ const NavBar = props => {
                         <button className="dropdown-item" onClick={props.validateXML} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">Validate XML(Single xsd)</button>
                         <button className="dropdown-item" onClick={props.generateXML} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">Generate XML</button>
                         <button className="dropdown-item" onClick={props.viewInGraph}>View in Graph</button>
-                        <button className="dropdown-item" onClick={props.validateMultiXML}>Validate XML(Multiple xsd)</button>
+                        <button className="dropdown-item" onClick={props.validateMultiXML} data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">Validate XML(Multiple xsd)</button>
                     </div>
                 </div>
                 <div className="btn-group" role="group">

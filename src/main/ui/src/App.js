@@ -157,6 +157,7 @@ class App extends Component {
           viewInGraph={() => this.handleSubmit()}
           saveToFile={()=>this.saveToFile()}
           validateXML={()=>this.validateXML()}
+          validateMultiXML={()=>this.validateMultiXML()}
         >
 
         </NavBar>
@@ -201,8 +202,8 @@ class App extends Component {
                   <label><a onClick={()=>this.openChooseFile()} href="#" className="btn btn-sm btn-warning">Choose</a>  or type xpath/xslt/xsd/xquery </label> 
                   &nbsp; ||   <a onClick={()=>this.chooseMultiXsd()} href="#" className="btn btn-sm btn-warning">Choose</a> multiple XSDs
                  <br/>
-                  <a class="btn btn-sm btn-secondary mb-1" data-toggle="collapse" href="#paramCollapse" role="button" aria-expanded="false" aria-controls="paramCollapse">
-                   Params &nbsp;<i class="fas fa-chevron-down"></i> 
+                  <a className="btn btn-sm btn-secondary mb-1" data-toggle="collapse" href="#paramCollapse" role="button" aria-expanded="false" aria-controls="paramCollapse">
+                   Params &nbsp;<i className="fas fa-chevron-down"></i> 
                   </a> <label >Xpath Evaluate&nbsp;</label>
                   <div className="form-check form-check-inline">
                     <input className="form-check-input" type="radio" name="xpath-version" id="xpath-version-1" value="1.0" checked={this.state.xpathVersion === '1.0'} onChange={() => this.xpathChange('1.0')} />
@@ -213,7 +214,7 @@ class App extends Component {
                     <label className="form-check-label">verison 2</label>
                   </div>
                   <button className="btn btn-sm btn-success" data-toggle="modal" data-target="#showTransformResult" data-backdrop="static" data-keyboard="false">View Result</button>
-                  <div class="collapse" id="paramCollapse">
+                  <div className="collapse" id="paramCollapse">
                   <textarea className="form-control" id="exampleTextarea" rows="2" value={this.state.param} onChange={this.handleParam.bind(this)}></textarea>
                   <small id="fileHelp" className="form-text">Ex)  param1=value1;param2=value2; (no single or double quotes)</small>
                   </div>
@@ -290,6 +291,43 @@ class App extends Component {
     }).catch(error => {
       console.log(error);
       alert("Error occured while doing xslt transformation");
+    });
+  }
+
+  getCdata(str) {
+    return "<![CDATA[".concat(_.escape(str)).concat("]]>")
+  }
+
+  validateMultiXML(){
+    let selectedXml = this.state.value
+    if (selectedXml === "") {
+      alert("Please provide input xml");
+      return false;
+    }
+    let xsds = this.state.multiXSD
+    if (xsds.length === 0) {
+      alert("Please provide input XSD");
+      return false;
+    }
+    let self = this;
+    let data = "<MultiXsdValidationInput><xml>".concat(this.getCdata(selectedXml)).concat("</xml>");
+    for (var k = 0, len = xsds.length; k < len; k++) {
+      let xsd = xsds[k];
+      if (xsd !== "") {
+        data = data.concat("<xsd>").concat(this.getCdata(xsd)).concat("</xsd>");
+      }
+    }
+    data = data.concat("</MultiXsdValidationInput>");
+    console.log("Data constructed");
+    axios.post(domain.dev.concat("/api/xml/multixsd"),
+      data,
+      { headers: { 'Content-Type': 'text/xml' }, responseType: "text" }
+    ).then(response => {
+      let output = response.data;
+      self.setState({ output: output });
+    }).catch(error => {
+      console.log(error);
+      alert("Error occured while doing xquery transformation");
     });
   }
 
