@@ -38,6 +38,11 @@
 			<version>9.9.1-1</version>
 		</dependency>
 		<dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        	<artifactId>httpclient</artifactId>
+        	<version>4.5.9</version>
+    	</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>

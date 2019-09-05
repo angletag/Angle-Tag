@@ -2,10 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
    <p>Welcome</p>
   	<a href="index.html">Access</a>
+  	
+  	<h2>Verify</h2>
+                	<form id="signup-form" class="form-horizontal" method="POST" 
+                		th:action="@{/verify}">
+                		<div class="form-group">
+                			<div class="g-recaptcha" data-sitekey="6LeWmbUUAAAAAEr5N-kHsy7FemWuQBDCWECT5cFD"></div>
+                		</div>
+                		<button type="submit" class="btn btn-primary">Submit</button>
+                	</form>
+  	
 </body>
 </html>
