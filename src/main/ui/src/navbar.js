@@ -1,9 +1,8 @@
 import React from "react";
 const NavBar = props => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light p-0">
-            <a className="navbar-brand pl-3" href="#">Angle Tag</a>
-           
+        <nav className="navbar navbar-expand-lg navbar-light bg-transparent p-0">
+
             <div className="navbar-collapse" id="navbarColor01">
                 <div className="mr-auto">
                 <div className="btn-group" role="group">
@@ -50,9 +49,9 @@ const NavBar = props => {
                 
                 </div>
                 <div className="my-2 my-lg-0">
-                <button className="btn btn-nav" type="button">
+                {/* <button className="btn btn-nav" type="button">
                     <i className="fas fa-sign-in-alt"></i> login
-                </button>
+                </button> */}
                 </div>
             </div>
         </nav>

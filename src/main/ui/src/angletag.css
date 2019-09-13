@@ -45,7 +45,7 @@ body{
 }
 
 .bg-right-side{
-  background-color: #2f8fca;
+  background-color: transparent;
   box-shadow: 0 .3rem 1rem #8a8a8a!important;
 }
 
@@ -69,4 +69,19 @@ body{
 .chooseFile{
   text-decoration: none;
   color:white;
+}
+
+.background {
+  background: url('images/header-background-star.jpg') center center no-repeat;
+  background-size: cover; 
+}
+
+.bg-transparent{
+  background-color: transparent !important;
+}
+
+#logo-btm{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
 }
