@@ -568,7 +568,7 @@ class App extends Component {
       alert("Please provide input xml");
       return false;
     }
-    if (!selectedXml.includes("<xsd:schema")) { // For xslt only
+    if (!selectedXml.includes(":schema")) { // For xslt only
       alert("invalid XSD");
       return false;
     }
