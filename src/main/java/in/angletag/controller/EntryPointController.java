@@ -17,19 +17,18 @@ import in.angletag.service.RecaptchaService;
 @Controller
 public class EntryPointController {
 
-	@Autowired
-	RecaptchaService captchaService;
 	
 	@RequestMapping("/index")
 	public String entry() {
 		return "index";
 	}
 	
-	@RequestMapping("/verify")
+	/*
+	 @RequestMapping("/verify")
+	 
 	public ResponseEntity<?> verify(@RequestParam(name="g-recaptcha-response") String recaptchaResponse,HttpServletRequest request) {
 		String ip = request.getRemoteAddr();
-		  String captchaVerifyMessage = 
-		      captchaService.verifyRecaptcha(ip, recaptchaResponse);
+		  //String captchaVerifyMessage = 		      captchaService.verifyRecaptcha(ip, recaptchaResponse);
 		 
 		  if ( !StringUtils.isEmpty(captchaVerifyMessage)) {
 		    Map<String, Object> response = new HashMap<>();
@@ -38,4 +37,6 @@ public class EntryPointController {
 		  }
 		  return ResponseEntity.ok().build();
 	}
+	
+	*/
 }

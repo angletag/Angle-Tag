@@ -27,7 +27,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
+
 public class RecaptchaService {
 
 	private static final Logger log = LoggerFactory.getLogger(RecaptchaService.class);

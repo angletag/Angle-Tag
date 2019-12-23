@@ -41,7 +41,7 @@ public class MvcConfigAdaptor implements WebMvcConfigurer{
 		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
 	
-	@Bean("proxiedRestTemplate")
+	//@Bean("proxiedRestTemplate")
 	public RestTemplate createRestTemplate() throws Exception {
         final String username = "";
         final String password = "";
