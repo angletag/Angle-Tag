@@ -18,7 +18,7 @@ import in.angletag.service.RecaptchaService;
 public class EntryPointController {
 
 	
-	@RequestMapping("/index")
+	//@RequestMapping("/index")
 	public String entry() {
 		return "index";
 	}
