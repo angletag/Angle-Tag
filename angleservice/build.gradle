@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.0' apply false
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'in.angleservice'
+version = '1.0.0'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+	}
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'net.sf.saxon:Saxon-HE:12.3'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	implementation 'org.apache.commons:commons-text:1.11.0'
+	implementation ('xerces:xercesImpl:2.12.2') {
+	     exclude group: "xml-apis", module: "xml-apis"
+	     
+	}
+	implementation ('in.jlibs:jlibs-xml:3.0.1') {
+	    exclude group: "xerces", module: "xercesImpl"
+	}
+	implementation ('in.jlibs:jlibs-xsd:3.0.1'){
+	    exclude group: "xerces", module: "xercesImpl"
+	    
+	}
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

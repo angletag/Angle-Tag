@@ -1,0 +1,4 @@
+rootProject.name = 'AngleTag'
+include 'angleservice'
+include 'angleui'
+
